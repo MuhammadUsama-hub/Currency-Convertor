@@ -1,0 +1,38 @@
+import inquirer from "inquirer";
+const exchangeRates = {
+    "USD": 1, // base currency
+    "PKR": 280,
+    "EUR": 0.91,
+    "GBP": 0.76,
+    "INR": 74.57,
+};
+const answers = await inquirer.prompt([
+    {
+        message: "Select Currency From :",
+        type: "list",
+        name: "currencyFrom",
+        choices: ["USD", "GBP", "EUR", "INR", "PKR"],
+    },
+    {
+        message: "Select Currency to :",
+        type: "list",
+        name: "currencyTo",
+        choices: ["USD", "GBP", "EUR", "INR", "PKR"],
+    },
+    {
+        message: "Amount :",
+        type: "number",
+        name: "amount",
+    },
+]);
+// conversion Calculaton
+let convertedAmount = function (from, to, amount) {
+    // console.log(from,' ',to)
+    let fromCurrencyRate = exchangeRates[from]; //get exchange rates
+    let toCurrencyRates = exchangeRates[to]; //get exchange rates
+    // console.log(fromCurrencyRate ,' ' , toCurrencyRates)
+    let amountTobase = amount / fromCurrencyRate; //amount convert to base amount
+    let result = amountTobase * toCurrencyRates;
+    return result;
+};
+console.log(`${Math.floor(convertedAmount(answers.currencyFrom, answers.currencyTo, answers.amount))} ${answers.currencyTo}`);
